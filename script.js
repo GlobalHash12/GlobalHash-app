@@ -1,4 +1,4 @@
-// Firebase Configuration
+// Firebase Configuration (ካንተ ዳታቤዝ ጋር የተገናኘ)
 const firebaseConfig = {
   apiKey: "AIzaSyDjJkJ6fl96n5TBrO2sXFMQWSK1Sf6luSM",
   authDomain: "globalhash-e431a.firebaseapp.com",
@@ -12,22 +12,30 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// Telegram Integration
+// Telegram WebApp Integration
 const tg = window.Telegram.WebApp;
 tg.expand();
-const userId = tg.initDataUnsafe.user?.id || "test_user";
-document.getElementById('username').innerText = `@${tg.initDataUnsafe.user?.username || 'Miner'}`;
+const userId = tg.initDataUnsafe.user?.id || "guest";
+const username = tg.initDataUnsafe.user?.username || "Miner";
 
-let userData = { balance: 0, adsSeen: 0, miningUntil: 0 };
+document.getElementById('username').innerText = `@${username}`;
 
-// Load Data from Database
+let userData = { balance: 0, adsSeen: 0, miningUntil: 0, friendsCount: 0 };
+
+// Load Data from Firebase
 db.ref('users/' + userId).on('value', (snapshot) => {
     if (snapshot.exists()) {
         userData = snapshot.val();
-        updateUI();
     } else {
+        // አዲስ ተጠቃሚ ከሆነ ሪፈራል ካለ ቼክ ማድረግ
+        const urlParams = new URLSearchParams(window.location.search);
+        const startParam = urlParams.get('tgWebAppStartParam');
+        if (startParam) {
+            giveReferralBonus(startParam);
+        }
         saveData();
     }
+    updateUI();
 });
 
 function handleAction() {
@@ -35,15 +43,33 @@ function handleAction() {
     if (userData.miningUntil > now) return;
 
     if (userData.adsSeen < 20) {
-        // Here we simulate ad watching
         userData.adsSeen++;
         saveData();
     } else {
-        // Start Mining for 24 hours
+        // Start 24H Mining
         userData.miningUntil = Date.now() + (24 * 60 * 60 * 1000);
         userData.adsSeen = 0;
         saveData();
     }
+}
+
+function giveReferralBonus(referrerId) {
+    db.ref('users/' + referrerId).once('value', (snap) => {
+        if (snap.exists()) {
+            let data = snap.val();
+            data.balance = (data.balance || 0) + 50; // ለጋባዡ 50 GH ስጦታ
+            data.friendsCount = (data.friendsCount || 0) + 1;
+            db.ref('users/' + referrerId).set(data);
+        }
+    });
+}
+
+// ጓደኛ መጋበዣ ቁልፍ ሲነካ (ይህ በአንተ ቦት ስም የተስተካከለ ነው)
+function inviteFriends() {
+    const inviteLink = `https://t.me/GlobalHash_bot/app?startapp=${userId}`;
+    const shareText = `Join GlobalHash and mine GH tokens with me! 🚀`;
+    const fullUrl = `https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=${encodeURIComponent(shareText)}`;
+    tg.openTelegramLink(fullUrl);
 }
 
 function updateUI() {
@@ -52,20 +78,11 @@ function updateUI() {
     document.getElementById('ad-count').innerText = userData.adsSeen + "/20";
 
     if (userData.miningUntil > now) {
-        // Mining is Active
         document.getElementById('status-text').innerText = "STATUS: MINING...";
         document.getElementById('action-btn').innerText = "MINING IN PROGRESS";
         document.getElementById('action-btn').style.opacity = "0.5";
-        document.getElementById('progress-bar').style.width = "100%";
-        
-        // Calculate remaining time
-        const remaining = userData.miningUntil - now;
-        updateTimer(remaining);
-
-        // Update Balance (visual only, real update happens on start)
-        // In a real pro app, we calculate balance based on time elapsed
+        updateTimer(userData.miningUntil - now);
     } else {
-        // Mining is Idle
         document.getElementById('status-text').innerText = "STATUS: IDLE";
         document.getElementById('timer').innerText = "24:00:00";
         document.getElementById('progress-bar').style.width = (userData.adsSeen / 20 * 100) + "%";
@@ -75,21 +92,19 @@ function updateUI() {
 }
 
 function updateTimer(ms) {
-    let seconds = Math.floor(ms / 1000);
-    let h = Math.floor(seconds / 3600);
-    let m = Math.floor((seconds % 3600) / 60);
-    let s = seconds % 60;
-    document.getElementById('timer').innerText = `${h}:${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
+    let s = Math.floor(ms / 1000);
+    let h = Math.floor(s / 3600);
+    let m = Math.floor((s % 3600) / 60);
+    let sec = s % 60;
+    document.getElementById('timer').innerText = `${h}:${m < 10 ? '0'+m : m}:${sec < 10 ? '0'+sec : sec}`;
 }
 
-// Visual balance increase every second during mining
+// Mining Process (በየሰከንዱ ባላንስ መጨመር)
 setInterval(() => {
     const now = Date.now();
     if (userData.miningUntil > now) {
-        userData.balance += 0.0001; // Mining rate
-        document.getElementById('balance').innerText = userData.balance.toFixed(4);
-        saveData(); // Save new balance
-        updateUI();
+        userData.balance += 0.0001; 
+        saveData();
     }
 }, 1000);
 
