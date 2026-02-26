@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GlobalHash Professional</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <div class="header">
+            <div class="user-pill">
+                <span id="username">Loading...</span>
+            </div>
+            <div class="rank">BRONZE</div>
+        </div>
+
+        <div class="main">
+            <p class="label">GLOBAL HASH BALANCE</p>
+            <div class="balance-container">
+                <img src="https://cdn-icons-png.flaticon.com/512/6001/6001527.png" class="coin">
+                <h1 id="balance">0.0000</h1>
+            </div>
+
+            <div class="card">
+                <div class="stats">
+                    <div class="stat"><span>Ads Watched</span><b id="ad-count">0/20</b></div>
+                    <div class="stat"><span>Mining Rate</span><b>+0.001/s</b></div>
+                </div>
+                
+                <div class="progress-bg">
+                    <div id="progress-bar" class="progress-fill"></div>
+                </div>
+                
+                <button id="action-btn" onclick="handleAction()">WATCH AD TO START</button>
+            </div>
+        </div>
+
+        <div class="nav">
+            <div class="nav-item active">⛏ Mining</div>
+            <div class="nav-item">👥 Friends</div>
+            <div class="nav-item">💼 Wallet</div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
