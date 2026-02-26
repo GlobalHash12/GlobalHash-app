@@ -1,0 +1,19 @@
+body { background: #000; color: #fff; font-family: 'Rajdhani', sans-serif; margin: 0; height: 100vh; overflow: hidden; }
+#app { display: flex; flex-direction: column; height: 100%; padding: 20px; box-sizing: border-box; justify-content: space-between; }
+.header { display: flex; justify-content: space-between; align-items: center; }
+.user-pill { background: #111; padding: 5px 15px; border-radius: 20px; border: 1px solid #333; font-size: 14px; }
+.rank { color: #f39c12; font-weight: bold; font-size: 14px; }
+.main { text-align: center; }
+.label { color: #888; font-size: 12px; letter-spacing: 2px; margin-bottom: 5px; }
+.balance-container { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 30px; }
+.coin { width: 50px; filter: drop-shadow(0 0 10px #f39c12); }
+#balance { font-family: 'Orbitron', sans-serif; font-size: 45px; color: #f39c12; margin: 0; }
+.card { background: #0a0a0a; border-radius: 25px; padding: 20px; border: 1px solid #222; }
+.stats { display: flex; justify-content: space-between; margin-bottom: 15px; }
+.stat span { display: block; font-size: 11px; color: #666; }
+.progress-bg { background: #1a1a1a; height: 10px; border-radius: 10px; margin-bottom: 20px; overflow: hidden; border: 1px solid #333; }
+.progress-fill { background: linear-gradient(90deg, #f39c12, #ffcc00); width: 0%; height: 100%; transition: 0.3s; }
+#action-btn { background: #f39c12; color: #000; border: none; width: 100%; padding: 18px; border-radius: 15px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3); }
+.nav { display: flex; justify-content: space-around; padding-bottom: 10px; }
+.nav-item { color: #444; font-size: 12px; font-weight: bold; }
+.nav-item.active { color: #f39c12; }
