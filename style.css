@@ -1,34 +1,25 @@
-body { background: #000; color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; height: 100vh; overflow: hidden; }
-#app { display: flex; flex-direction: column; height: 100%; padding: 15px; box-sizing: border-box; }
-.top-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-.user-pill { background: #111; padding: 5px 12px; border-radius: 20px; border: 1px solid #333; font-size: 11px; color: #0088cc; }
+body { background: #0a0a0a; color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; }
+#app { padding: 20px; padding-bottom: 80px; }
+.main-header { text-align: center; margin-bottom: 30px; }
+.main-header h1 { font-weight: 900; letter-spacing: 2px; margin: 0; }
+.main-header h1 span { color: #f39c12; }
+.main-header p { font-size: 12px; color: #666; margin-top: 5px; }
 
-.tier-bronze { color: #cd7f32; font-weight: 900; border: 1px solid #cd7f32; padding: 2px 8px; border-radius: 5px; font-size: 10px; }
-.tier-silver { color: #c0c0c0; font-weight: 900; border: 1px solid #c0c0c0; padding: 2px 8px; border-radius: 5px; font-size: 10px; }
-.tier-gold { color: #ffd700; font-weight: 900; border: 1px solid #ffd700; padding: 2px 8px; border-radius: 5px; font-size: 10px; }
+.book-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.book-card { background: #111; border-radius: 15px; overflow: hidden; border: 1px solid #222; transition: 0.3s; }
+.book-card img { width: 100%; height: 220px; object-fit: cover; }
+.book-card h3 { font-size: 14px; padding: 10px; margin: 0; text-align: center; height: 35px; overflow: hidden; }
 
-.content-section { display: none; flex-direction: column; flex-grow: 1; text-align: center; }
-.content-section.active { display: flex; }
-.coin-img { width: 50px !important; height: 50px !important; object-fit: contain; }
-.main-display { margin: 20px 0; }
-#balance { font-size: 45px; color: #fff; margin: 0; font-weight: 900; }
+.page { display: none; flex-direction: column; }
+.page.active { display: flex; }
 
-.mining-card { background: #0a0a0a; border-radius: 25px; padding: 20px; border: 1px solid #222; margin-top: auto; position: relative; }
-.medal-badge { font-size: 25px; position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: #000; padding: 5px; border-radius: 50%; border: 1px solid #0088cc; }
-.card-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; font-size: 13px; }
-.timer { color: #0088cc; }
-.progress-bg { background: #1a1a1a; height: 8px; border-radius: 10px; overflow: hidden; margin: 10px 0; }
-.progress-fill { background: #0088cc; height: 100%; width: 0%; transition: 0.3s; }
+.back-btn { background: none; border: 1px solid #333; color: #888; padding: 8px 15px; border-radius: 20px; width: fit-content; margin-bottom: 20px; cursor: pointer; }
+.chapter-container { display: grid; gap: 10px; }
+.chapter-btn { background: #111; border: 1px solid #222; color: #fff; padding: 15px; border-radius: 12px; text-align: left; display: flex; justify-content: space-between; align-items: center; }
+.chapter-btn.locked { opacity: 0.7; border-left: 4px solid #f39c12; }
 
-.wallet-card { background: #111; padding: 20px; border-radius: 20px; border: 1px solid #222; margin-bottom: 15px; }
-.conversion-box { margin-top: 10px; padding-top: 10px; border-top: 1px solid #222; }
-.conversion-box p { color: #0088cc; font-weight: bold; margin: 0; }
-.conversion-box small { color: #666; font-size: 10px; }
-.alert-box { background: rgba(255, 165, 0, 0.1); color: #ffa500; padding: 10px; border-radius: 10px; font-size: 11px; margin-bottom: 15px; border: 1px solid rgba(255, 165, 0, 0.2); }
+.novel-text { background: #111; padding: 20px; border-radius: 15px; line-height: 1.8; font-size: 16px; margin-top: 20px; white-space: pre-wrap; }
+.hidden { display: none; }
 
-.main-action, .pro-button { background: #0088cc; color: #fff; border: none; width: 100%; padding: 15px; border-radius: 12px; font-weight: 900; font-size: 15px; cursor: pointer; }
-.bottom-menu { display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #111; margin-top: 10px; }
-.nav-item { background: none; border: none; color: #444; font-weight: bold; font-size: 10px; cursor: pointer; }
-.nav-item.active { color: #0088cc; }
-input { background: #111; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 8px; width: 100%; box-sizing: border-box; }
-.title { color: #0088cc; font-size: 18px; margin: 15px 0; }
+.bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #000; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #111; }
+.bottom-nav button { background: none; border: none; color: #f39c12; font-weight: bold; }
