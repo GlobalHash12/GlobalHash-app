@@ -13,17 +13,13 @@ const db = firebase.database();
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-const user = tg.initDataUnsafe.user;
-const userId = user ? user.id : "guest_user";
-document.getElementById('username').innerText = "@" + (user?.username || "Miner");
+const userId = tg.initDataUnsafe.user?.id || "guest";
+document.getElementById('username').innerText = "@" + (tg.initDataUnsafe.user?.username || "Miner");
 
-let userData = { balance: 0, adsSeen: 0, miningUntil: 0, friends: 0, tier: "BRONZE" };
+let userData = { balance: 0, adsSeen: 0, miningUntil: 0, friends: 0 };
 
 db.ref('users/' + userId).on('value', (snapshot) => {
-    if (snapshot.exists()) {
-        userData = snapshot.val();
-        updateTier();
-    } else { saveData(); }
+    if (snapshot.exists()) { userData = snapshot.val(); }
     updateUI();
 });
 
@@ -34,7 +30,8 @@ function showTab(tabName) {
     event.currentTarget.classList.add('active');
 }
 
-const AdController = window.Adsgram.init({ blockId: "23804" });
+const AdController = window.Adsgram.init({ blockId: "23804", debug: true });
+
 async function showAd() {
     if (userData.miningUntil > Date.now()) return;
     if (userData.adsSeen < 20) {
@@ -42,45 +39,18 @@ async function showAd() {
             await AdController.show();
             userData.adsSeen++;
             saveData();
-        } catch (e) { tg.showAlert("Ad not ready. Try later."); }
-    } else { startMining(); }
-}
-
-function startMining() {
-    userData.miningUntil = Date.now() + (24 * 60 * 60 * 1000);
-    userData.adsSeen = 0;
-    saveData();
-}
-
-function updateTier() {
-    let t = "BRONZE";
-    let badge = document.getElementById('tier-badge');
-    if (userData.balance >= 1000) { t = "GOLD"; badge.className = "tier-gold"; }
-    else if (userData.balance >= 200) { t = "SILVER"; badge.className = "tier-silver"; }
-    badge.innerText = t;
-}
-
-function inviteFriends() {
-    const link = "https://t.me/GlobalHash_bot/app?startapp=" + userId;
-    tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=Join me on GlobalHash!`);
-}
-
-function requestWithdraw() {
-    const addr = document.getElementById('wallet-address').value;
-    if (userData.balance < 100) { tg.showAlert("Min 100 GH needed."); return; }
-    if (addr.length < 10) { tg.showAlert("Invalid address."); return; }
-    db.ref('withdrawals/' + userId).push({ addr: addr, amount: userData.balance, time: Date.now() });
-    userData.balance = 0;
-    saveData();
-    tg.showAlert("Withdrawal request sent!");
+        } catch (e) { tg.showAlert("Ad not ready. Try again."); }
+    } else {
+        userData.miningUntil = Date.now() + (24 * 60 * 60 * 1000);
+        userData.adsSeen = 0;
+        saveData();
+    }
 }
 
 function updateUI() {
-    document.getElementById('balance').innerText = userData.balance.toFixed(4);
-    document.getElementById('wallet-balance').innerText = userData.balance.toFixed(4) + " GH";
-    document.getElementById('ad-count').innerText = userData.adsSeen + "/20";
-    document.getElementById('friends-count').innerText = userData.friends || 0;
-
+    document.getElementById('balance').innerText = (userData.balance || 0).toFixed(4);
+    document.getElementById('wallet-balance').innerText = (userData.balance || 0).toFixed(4) + " GH";
+    document.getElementById('ad-count').innerText = (userData.adsSeen || 0) + "/20";
     const now = Date.now();
     if (userData.miningUntil > now) {
         document.getElementById('status-text').innerText = "MINING...";
@@ -89,8 +59,8 @@ function updateUI() {
         updateTimer(userData.miningUntil - now);
     } else {
         document.getElementById('status-text').innerText = "IDLE";
-        document.getElementById('progress-bar').style.width = (userData.adsSeen / 20 * 100) + "%";
-        document.getElementById('action-btn').innerText = userData.adsSeen >= 20 ? "START MINING ⛏️" : "WATCH AD TO START";
+        document.getElementById('progress-bar').style.width = ((userData.adsSeen || 0) / 20 * 100) + "%";
+        document.getElementById('action-btn').innerText = userData.adsSeen >= 20 ? "START MINING" : "WATCH AD TO START";
     }
 }
 
@@ -104,9 +74,22 @@ function updateTimer(ms) {
 
 setInterval(() => {
     if (userData.miningUntil > Date.now()) {
-        userData.balance += 0.0001;
+        userData.balance = (userData.balance || 0) + 0.0001;
         saveData();
     }
 }, 1000);
 
 function saveData() { db.ref('users/' + userId).set(userData); }
+
+function inviteFriends() {
+    const link = "https://t.me/GlobalHash_bot/app?startapp=" + userId;
+    tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=Join me on GlobalHash!`);
+}
+
+function requestWithdraw() {
+    const addr = document.getElementById('wallet-address').value;
+    if (userData.balance < 100) { tg.showAlert("Min 100 GH required."); return; }
+    db.ref('withdrawals/' + userId).push({ addr: addr, amount: userData.balance, time: Date.now() });
+    userData.balance = 0; saveData();
+    tg.showAlert("Request sent!");
+}
