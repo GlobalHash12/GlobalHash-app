@@ -3,41 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GlobalHash Professional</title>
+    <title>GlobalHash Platform</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <script src="https://sad.adsgram.ai/js/adsgram-ad-sdk.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="app">
+        <!-- TOP NAVIGATION -->
         <div class="top-nav">
             <div class="user-pill"><span id="username">Loading...</span></div>
-            <div class="rank">BRONZE MINER</div>
+            <div class="rank-badge">BRONZE MINER</div>
         </div>
-        <div class="main-display">
-            <p class="label">GLOBAL HASH BALANCE</p>
-            <div class="balance-row">
-                <img src="https://cdn-icons-png.flaticon.com/512/6001/6001527.png" class="coin">
-                <h1 id="balance">0.0000</h1>
+
+        <!-- MAIN CONTENT SECTIONS -->
+        <div id="mine-section" class="content-section active">
+            <div class="main-display">
+                <p class="label">GLOBAL HASH BALANCE</p>
+                <div class="balance-row">
+                    <img src="https://cdn-icons-png.flaticon.com/512/6001/6001527.png" class="coin">
+                    <h1 id="balance">0.0000</h1>
+                </div>
+            </div>
+
+            <div class="mining-card">
+                <div class="medal-badge">🏅</div>
+                <div class="card-header">
+                    <span id="status-text">STATUS: IDLE</span>
+                    <span id="timer" class="timer">24:00:00</span>
+                </div>
+                <div class="progress-bg"><div id="progress-bar" class="progress-fill"></div></div>
+                <div class="ad-info">Daily Ads: <span id="ad-count">0/20</span></div>
+                <button id="action-btn" onclick="showAd()">WATCH AD TO START</button>
             </div>
         </div>
-        <div class="mining-card">
-            <div class="medal-badge">🏅</div>
-            <div class="card-header">
-                <span id="status-text">STATUS: IDLE</span>
-                <span id="timer" class="timer">24:00:00</span>
+
+        <div id="team-section" class="content-section">
+            <h2 class="section-title">REFERRAL PROGRAM</h2>
+            <div class="stats-box">
+                <p>Total Invited</p>
+                <h3 id="friends-count">0</h3>
             </div>
-            <div class="progress-bg"><div id="progress-bar" class="progress-fill"></div></div>
-            <div class="ad-info">Daily Ads Progress: <span id="ad-count">0/20</span></div>
-            <button id="action-btn" onclick="showAd()">WATCH AD TO START</button>
+            <p class="info-text">Invite friends and get 10% of their mining speed!</p>
+            <button class="pro-btn" onclick="inviteFriends()">INVITE FRIENDS</button>
         </div>
+
+        <div id="wallet-section" class="content-section">
+            <h2 class="section-title">WALLET</h2>
+            <div class="stats-box">
+                <p>Withdrawable Balance</p>
+                <h3 id="wallet-balance">0.0000 GH</h3>
+            </div>
+            <div class="input-group">
+                <label>TON/BEP20 Address</label>
+                <input type="text" id="wallet-address" placeholder="Enter your address">
+            </div>
+            <button class="pro-btn" onclick="requestWithdraw()">WITHDRAW NOW</button>
+            <p class="min-withdraw">Minimum withdrawal: 100 GH</p>
+        </div>
+
+        <!-- BOTTOM NAVIGATION -->
         <div class="bottom-menu">
-            <div class="menu-item active">⛏ Mine</div>
-            <div class="menu-item" onclick="inviteFriends()">👥 Team</div>
-            <div class="menu-item">💼 Wallet</div>
+            <button class="nav-item active" onclick="showTab('mine')">⛏ Mine</button>
+            <button class="nav-item" onclick="showTab('team')">👥 Team</button>
+            <button class="nav-item" onclick="showTab('wallet')">💼 Wallet</button>
         </div>
     </div>
     <script src="script.js"></script>
