@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GlobalNovel - Read & Enjoy</title>
+    <title>GlobalNovel - Multi-Language Edition</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://sad.adsgram.ai/js/adsgram-ad-sdk.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
@@ -11,35 +11,35 @@
 </head>
 <body>
     <div id="app">
-        <!-- LIBRARY HOME -->
-        <div id="library-section" class="page active">
-            <header class="main-header">
-                <h1>GLOBAL<span>NOVEL</span></h1>
-                <p>Ethiopia's Premium Novel Hub</p>
+        <!-- LANGUAGE SELECTION (ልክ እንደ ምስልህ) -->
+        <div id="language-section" class="page active">
+            <header class="header-nav">
+                <div class="logo">GLOBAL<span>NOVEL</span></div>
+                <div class="nav-icons">
+                    <span class="icon">🔍</span>
+                    <span class="icon">📧</span>
+                    <span class="icon">🔔</span>
+                </div>
             </header>
-            
-            <div class="book-grid" id="book-list">
-                <!-- Books will be loaded here by script.js -->
+            <div class="language-list" id="language-list">
+                <!-- 14 Languages will be loaded here -->
             </div>
+        </div>
+
+        <!-- LIBRARY PAGE -->
+        <div id="library-section" class="page">
+            <button class="back-btn" onclick="showPage('language-section')">← Change Language</button>
+            <h2 id="selected-lang-title">Novels</h2>
+            <div class="book-grid" id="book-list"></div>
         </div>
 
         <!-- READER PAGE -->
         <div id="reader-section" class="page">
             <button class="back-btn" onclick="showPage('library-section')">← Back to Library</button>
             <h2 id="reading-title">Book Title</h2>
-            <div id="chapter-list" class="chapter-container">
-                <!-- Chapters will be here -->
-            </div>
-            <div id="content-display" class="novel-text hidden">
-                <!-- Reading content -->
-            </div>
+            <div id="chapter-list" class="chapter-container"></div>
+            <div id="content-display" class="novel-text hidden"></div>
         </div>
-
-        <!-- BOTTOM NAV -->
-        <nav class="bottom-nav">
-            <button onclick="showPage('library-section')">📚 Library</button>
-            <button onclick="tg.showAlert('Coming soon!')">⭐ My Favorites</button>
-        </nav>
     </div>
     <script src="script.js"></script>
 </body>
