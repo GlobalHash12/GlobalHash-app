@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GlobalNovel - Multi-Language Edition</title>
+    <title>GlobalNovel</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://sad.adsgram.ai/js/adsgram-ad-sdk.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
@@ -11,31 +11,34 @@
 </head>
 <body>
     <div id="app">
-        <!-- LANGUAGE SELECTION (ልክ እንደ ምስልህ) -->
+        <!-- HEADER (ልክ እንደ ምስልህ) -->
+        <header class="main-nav">
+            <div class="logo">GLOBAL<span>NOVEL</span></div>
+            <div class="header-icons">
+                <div class="icon-circle blue">🔍</div>
+                <div class="icon-circle dark-blue">@</div>
+                <div class="icon-circle light-blue">▼</div>
+                <div class="icon-circle notify-blue">🔔</div>
+            </div>
+        </header>
+
+        <!-- LANGUAGE LIST PAGE -->
         <div id="language-section" class="page active">
-            <header class="header-nav">
-                <div class="logo">GLOBAL<span>NOVEL</span></div>
-                <div class="nav-icons">
-                    <span class="icon">🔍</span>
-                    <span class="icon">📧</span>
-                    <span class="icon">🔔</span>
-                </div>
-            </header>
-            <div class="language-list" id="language-list">
-                <!-- 14 Languages will be loaded here -->
+            <div class="lang-container" id="language-list">
+                <!-- 14 Languages will appear here -->
             </div>
         </div>
 
         <!-- LIBRARY PAGE -->
         <div id="library-section" class="page">
-            <button class="back-btn" onclick="showPage('language-section')">← Change Language</button>
+            <button class="back-link" onclick="showPage('language-section')">← Back to Languages</button>
             <h2 id="selected-lang-title">Novels</h2>
             <div class="book-grid" id="book-list"></div>
         </div>
 
         <!-- READER PAGE -->
         <div id="reader-section" class="page">
-            <button class="back-btn" onclick="showPage('library-section')">← Back to Library</button>
+            <button class="back-link" onclick="showPage('library-section')">← Back to Library</button>
             <h2 id="reading-title">Book Title</h2>
             <div id="chapter-list" class="chapter-container"></div>
             <div id="content-display" class="novel-text hidden"></div>
