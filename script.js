@@ -1,4 +1,3 @@
-// FIREBASE CONFIG
 const firebaseConfig = {
   apiKey: "AIzaSyDjJkJ6fl96n5TBrO2sXFMQWSK1Sf6luSM",
   authDomain: "globalhash-e431a.firebaseapp.com",
@@ -18,19 +17,16 @@ const user = tg.initDataUnsafe.user;
 const userId = user ? user.id : "guest_user";
 document.getElementById('username').innerText = "@" + (user?.username || "Miner");
 
-let userData = { balance: 0, adsSeen: 0, miningUntil: 0, friends: 0 };
+let userData = { balance: 0, adsSeen: 0, miningUntil: 0, friends: 0, tier: "BRONZE" };
 
-// LOAD DATA
 db.ref('users/' + userId).on('value', (snapshot) => {
     if (snapshot.exists()) {
         userData = snapshot.val();
-    } else {
-        saveData();
-    }
+        updateTier();
+    } else { saveData(); }
     updateUI();
 });
 
-// TAB SYSTEM
 function showTab(tabName) {
     document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
@@ -38,22 +34,16 @@ function showTab(tabName) {
     event.currentTarget.classList.add('active');
 }
 
-// ADSGRAM
 const AdController = window.Adsgram.init({ blockId: "23804" });
 async function showAd() {
-    const now = Date.now();
-    if (userData.miningUntil > now) return;
+    if (userData.miningUntil > Date.now()) return;
     if (userData.adsSeen < 20) {
         try {
             await AdController.show();
             userData.adsSeen++;
             saveData();
-        } catch (e) {
-            tg.showAlert("Ad not ready yet. Try again later.");
-        }
-    } else {
-        startMining();
-    }
+        } catch (e) { tg.showAlert("Ad not ready. Try later."); }
+    } else { startMining(); }
 }
 
 function startMining() {
@@ -62,43 +52,36 @@ function startMining() {
     saveData();
 }
 
-// REFERRAL SYSTEM
-function inviteFriends() {
-    const botLink = "https://t.me/GlobalHash_bot/app?startapp=" + userId;
-    const text = "Mine GH tokens with me! ⛏️";
-    tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(botLink)}&text=${encodeURIComponent(text)}`);
+function updateTier() {
+    let t = "BRONZE";
+    let badge = document.getElementById('tier-badge');
+    if (userData.balance >= 1000) { t = "GOLD"; badge.className = "tier-gold"; }
+    else if (userData.balance >= 200) { t = "SILVER"; badge.className = "tier-silver"; }
+    badge.innerText = t;
 }
 
-// WITHDRAWAL
+function inviteFriends() {
+    const link = "https://t.me/GlobalHash_bot/app?startapp=" + userId;
+    tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=Join me on GlobalHash!`);
+}
+
 function requestWithdraw() {
-    const address = document.getElementById('wallet-address').value;
-    if (userData.balance < 100) {
-        tg.showAlert("Minimum withdrawal is 100 GH.");
-        return;
-    }
-    if (address.length < 10) {
-        tg.showAlert("Please enter a valid address.");
-        return;
-    }
-    // Save withdrawal request to Firebase
-    db.ref('withdrawals/' + userId).push({
-        address: address,
-        amount: userData.balance,
-        status: "Pending",
-        time: Date.now()
-    });
+    const addr = document.getElementById('wallet-address').value;
+    if (userData.balance < 100) { tg.showAlert("Min 100 GH needed."); return; }
+    if (addr.length < 10) { tg.showAlert("Invalid address."); return; }
+    db.ref('withdrawals/' + userId).push({ addr: addr, amount: userData.balance, time: Date.now() });
     userData.balance = 0;
     saveData();
     tg.showAlert("Withdrawal request sent!");
 }
 
 function updateUI() {
-    const now = Date.now();
     document.getElementById('balance').innerText = userData.balance.toFixed(4);
     document.getElementById('wallet-balance').innerText = userData.balance.toFixed(4) + " GH";
     document.getElementById('ad-count').innerText = userData.adsSeen + "/20";
     document.getElementById('friends-count').innerText = userData.friends || 0;
 
+    const now = Date.now();
     if (userData.miningUntil > now) {
         document.getElementById('status-text').innerText = "MINING...";
         document.getElementById('action-btn').innerText = "MINING IN PROGRESS";
@@ -106,7 +89,6 @@ function updateUI() {
         updateTimer(userData.miningUntil - now);
     } else {
         document.getElementById('status-text').innerText = "IDLE";
-        document.getElementById('timer').innerText = "24:00:00";
         document.getElementById('progress-bar').style.width = (userData.adsSeen / 20 * 100) + "%";
         document.getElementById('action-btn').innerText = userData.adsSeen >= 20 ? "START MINING ⛏️" : "WATCH AD TO START";
     }
@@ -121,8 +103,7 @@ function updateTimer(ms) {
 }
 
 setInterval(() => {
-    const now = Date.now();
-    if (userData.miningUntil > now) {
+    if (userData.miningUntil > Date.now()) {
         userData.balance += 0.0001;
         saveData();
     }
