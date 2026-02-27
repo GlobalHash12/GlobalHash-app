@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GlobalHash Pro</title>
-    <!-- Telegram & Firebase SDKs -->
+    <title>GlobalHash Professional</title>
+    <!-- አስፈላጊ ስክሪፕቶች -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+    <script src="https://sad.adsgram.ai/js/adsgram-ad-sdk.js"></script>
     
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -16,36 +17,27 @@
     <div id="app">
         <div class="top-nav">
             <div class="user-pill"><span id="username">Loading...</span></div>
-            <div class="rank-badge">BRONZE MINER</div>
+            <div class="rank">BRONZE MINER</div>
         </div>
 
         <div class="main-display">
-            <p class="balance-label">GLOBAL HASH BALANCE</p>
+            <p class="label">GLOBAL HASH BALANCE</p>
             <div class="balance-row">
-                <img src="https://cdn-icons-png.flaticon.com/512/6001/6001527.png" class="coin-icon">
+                <img src="https://cdn-icons-png.flaticon.com/512/6001/6001527.png" class="coin">
                 <h1 id="balance">0.0000</h1>
             </div>
         </div>
 
         <div class="mining-card">
-            <!-- የሜዳሊያ ምልክት -->
-            <div class="medal-icon">🏅</div>
-            
+            <div class="medal-badge">🏅</div>
             <div class="card-header">
                 <span id="status-text">STATUS: IDLE</span>
-                <span id="timer" class="timer-text">24:00:00</span>
+                <span id="timer" class="timer">24:00:00</span>
             </div>
+            <div class="progress-bg"><div id="progress-bar" class="progress-fill"></div></div>
+            <div class="ad-info">Daily Ads Progress: <span id="ad-count">0/20</span></div>
             
-            <div class="progress-container">
-                <div id="progress-bar" class="progress-fill"></div>
-            </div>
-
-            <div class="ad-stats">
-                <span>Daily Ads Progress</span>
-                <b id="ad-count">0/20</b>
-            </div>
-
-            <button id="action-btn" onclick="handleAction()">LOADING...</button>
+            <button id="action-btn" onclick="showAd()">WATCH AD TO START</button>
         </div>
 
         <div class="bottom-menu">
