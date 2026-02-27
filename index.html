@@ -3,78 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GlobalHash Elite</title>
+    <title>GlobalNovel - Read & Enjoy</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <script src="https://sad.adsgram.ai/js/adsgram-ad-sdk.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="app">
-        <div class="top-nav">
-            <div class="user-pill"><span id="username">@User</span></div>
-            <div id="tier-badge" class="tier-bronze">BRONZE</div>
-        </div>
-
-        <!-- MINE SECTION -->
-        <div id="mine-section" class="content-section active">
-            <div class="main-display">
-                <p class="label">TOTAL GH BALANCE</p>
-                <div class="balance-row">
-                    <img src="https://cryptologos.cc/logos/toncoin-ton-logo.png" class="coin-img">
-                    <h1 id="balance">0.0000</h1>
-                </div>
-            </div>
-            <div class="mining-card">
-                <div class="medal-badge">🏅</div>
-                <div class="card-header">
-                    <span id="status-text">STATUS: IDLE</span>
-                    <span id="timer" class="timer">24:00:00</span>
-                </div>
-                <div class="progress-bg"><div id="progress-bar" class="progress-fill"></div></div>
-                <p class="ad-info">Daily Ads Progress: <span id="ad-count">0/20</span></p>
-                <button id="action-btn" class="main-action" onclick="showAd()">WATCH AD TO START</button>
-            </div>
-        </div>
-
-        <!-- TEAM SECTION -->
-        <div id="team-section" class="content-section">
-            <h2 class="title">YOUR ELITE TEAM</h2>
-            <div class="stats-grid">
-                <div class="stat-card"><p>Friends</p><h3 id="friends-count">0</h3></div>
-                <div class="stat-card"><p>Ref. Bonus</p><h3 style="color: #0088cc;">+10%</h3></div>
-            </div>
-            <div class="bonus-display">
-                <p>Team Earnings: <span id="ref-earnings">0.0000</span> GH</p>
-            </div>
-            <button class="pro-button" onclick="inviteFriends()">INVITE FRIENDS</button>
-        </div>
-
-        <!-- WALLET SECTION -->
-        <div id="wallet-section" class="content-section">
-            <h2 class="title">WALLET & EXCHANGE</h2>
-            <div class="wallet-card">
-                <p>GH Balance</p>
-                <h2 id="wallet-balance">0.0000 GH</h2>
-                <div class="conversion-box">
-                    <p>Estimated Value: <span id="ton-value">0.00</span> TON</p>
-                    <small>Rate: 100 GH = 1 TON</small>
-                </div>
-            </div>
+        <!-- LIBRARY HOME -->
+        <div id="library-section" class="page active">
+            <header class="main-header">
+                <h1>GLOBAL<span>NOVEL</span></h1>
+                <p>Ethiopia's Premium Novel Hub</p>
+            </header>
             
-            <div class="alert-box">⚠️ Currently only TON Wallet is accepted.</div>
-
-            <input type="text" id="wallet-address" placeholder="Enter TON Address (e.g. UQ...)">
-            <button class="pro-button" onclick="requestWithdraw()">WITHDRAW TON</button>
-            <p class="min-info">Minimum withdrawal: 100 GH (1 TON)</p>
+            <div class="book-grid" id="book-list">
+                <!-- Books will be loaded here by script.js -->
+            </div>
         </div>
 
-        <nav class="bottom-menu">
-            <button class="nav-item active" onclick="showTab('mine')">⛏ Mine</button>
-            <button class="nav-item" onclick="showTab('team')">👥 Team</button>
-            <button class="nav-item" onclick="showTab('wallet')">💼 Wallet</button>
+        <!-- READER PAGE -->
+        <div id="reader-section" class="page">
+            <button class="back-btn" onclick="showPage('library-section')">← Back to Library</button>
+            <h2 id="reading-title">Book Title</h2>
+            <div id="chapter-list" class="chapter-container">
+                <!-- Chapters will be here -->
+            </div>
+            <div id="content-display" class="novel-text hidden">
+                <!-- Reading content -->
+            </div>
+        </div>
+
+        <!-- BOTTOM NAV -->
+        <nav class="bottom-nav">
+            <button onclick="showPage('library-section')">📚 Library</button>
+            <button onclick="tg.showAlert('Coming soon!')">⭐ My Favorites</button>
         </nav>
     </div>
     <script src="script.js"></script>
