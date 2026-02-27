@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GlobalHash TON Edition</title>
+    <title>GlobalHash Elite</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
@@ -18,11 +18,11 @@
             <div id="tier-badge" class="tier-bronze">BRONZE</div>
         </div>
 
+        <!-- MINE SECTION -->
         <div id="mine-section" class="content-section active">
             <div class="main-display">
-                <p class="label">GH BALANCE</p>
+                <p class="label">TOTAL GH BALANCE</p>
                 <div class="balance-row">
-                    <!-- የ TON ምስል እዚህ ጋር ገብቷል -->
                     <img src="https://cryptologos.cc/logos/toncoin-ton-logo.png" class="coin-img">
                     <h1 id="balance">0.0000</h1>
                 </div>
@@ -34,28 +34,41 @@
                     <span id="timer" class="timer">24:00:00</span>
                 </div>
                 <div class="progress-bg"><div id="progress-bar" class="progress-fill"></div></div>
-                <p class="ad-info">Daily Ads: <span id="ad-count">0/20</span></p>
+                <p class="ad-info">Daily Ads Progress: <span id="ad-count">0/20</span></p>
                 <button id="action-btn" class="main-action" onclick="showAd()">WATCH AD TO START</button>
             </div>
         </div>
 
+        <!-- TEAM SECTION -->
         <div id="team-section" class="content-section">
-            <h2 class="title">YOUR TEAM</h2>
+            <h2 class="title">YOUR ELITE TEAM</h2>
             <div class="stats-grid">
                 <div class="stat-card"><p>Friends</p><h3 id="friends-count">0</h3></div>
-                <div class="stat-card"><p>Bonus</p><h3>+10%</h3></div>
+                <div class="stat-card"><p>Ref. Bonus</p><h3 style="color: #0088cc;">+10%</h3></div>
+            </div>
+            <div class="bonus-display">
+                <p>Team Earnings: <span id="ref-earnings">0.0000</span> GH</p>
             </div>
             <button class="pro-button" onclick="inviteFriends()">INVITE FRIENDS</button>
         </div>
 
+        <!-- WALLET SECTION -->
         <div id="wallet-section" class="content-section">
-            <h2 class="title">WALLET</h2>
+            <h2 class="title">WALLET & EXCHANGE</h2>
             <div class="wallet-card">
-                <p>Available</p>
+                <p>GH Balance</p>
                 <h2 id="wallet-balance">0.0000 GH</h2>
+                <div class="conversion-box">
+                    <p>Estimated Value: <span id="ton-value">0.00</span> TON</p>
+                    <small>Rate: 100 GH = 1 TON</small>
+                </div>
             </div>
-            <input type="text" id="wallet-address" placeholder="Enter TON Wallet Address">
-            <button class="pro-button" onclick="requestWithdraw()">WITHDRAW</button>
+            
+            <div class="alert-box">⚠️ Currently only TON Wallet is accepted.</div>
+
+            <input type="text" id="wallet-address" placeholder="Enter TON Address (e.g. UQ...)">
+            <button class="pro-button" onclick="requestWithdraw()">WITHDRAW TON</button>
+            <p class="min-info">Minimum withdrawal: 100 GH (1 TON)</p>
         </div>
 
         <nav class="bottom-menu">
