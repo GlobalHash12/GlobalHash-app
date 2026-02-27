@@ -1,20 +1,23 @@
 body { background: #000; color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; height: 100vh; overflow: hidden; }
-#app { display: flex; flex-direction: column; height: 100%; padding: 25px; box-sizing: border-box; }
+#app { display: flex; flex-direction: column; height: 100%; padding: 20px; box-sizing: border-box; }
 .top-nav { display: flex; justify-content: space-between; align-items: center; }
 .user-pill { background: #111; padding: 6px 15px; border-radius: 20px; border: 1px solid #333; color: #f39c12; font-size: 13px; }
-.main-display { text-align: center; margin: 40px 0; }
-.label { color: #888; font-size: 11px; letter-spacing: 2px; margin-bottom: 5px; }
+.content-section { display: none; flex-direction: column; flex-grow: 1; }
+.content-section.active { display: flex; }
+.main-display { text-align: center; margin: 30px 0; }
 .balance-row { display: flex; align-items: center; justify-content: center; gap: 10px; }
 .coin { width: 45px; filter: drop-shadow(0 0 10px #f39c12); }
-#balance { font-size: 45px; color: #f39c12; margin: 0; font-weight: 700; }
-.mining-card { background: #0a0a0a; border-radius: 30px; padding: 25px; border: 1px solid #222; margin-top: auto; position: relative; text-align: center; }
+#balance { font-size: 45px; color: #f39c12; margin: 0; font-weight: 900; }
+.mining-card { background: #0a0a0a; border-radius: 30px; padding: 25px; border: 1px solid #222; margin-top: auto; position: relative; }
 .medal-badge { font-size: 30px; position: absolute; top: -20px; left: 50%; transform: translateX(-50%); background: #000; padding: 5px; border-radius: 50%; border: 1px solid #f39c12; }
-.card-header { display: flex; justify-content: space-between; margin-bottom: 12px; font-weight: bold; font-size: 14px; }
-.timer { color: #f39c12; }
-.progress-bg { background: #1a1a1a; height: 10px; border-radius: 10px; overflow: hidden; margin-bottom: 15px; }
+.progress-bg { background: #1a1a1a; height: 10px; border-radius: 10px; overflow: hidden; margin: 15px 0; }
 .progress-fill { background: linear-gradient(90deg, #f39c12, #ffcc00); width: 0%; height: 100%; transition: 0.4s; }
-.ad-info { font-size: 13px; color: #666; margin-bottom: 20px; }
-#action-btn { background: #f39c12; color: #000; border: none; width: 100%; padding: 18px; border-radius: 15px; font-weight: 900; font-size: 16px; cursor: pointer; }
-.bottom-menu { display: flex; justify-content: space-around; padding-top: 20px; margin-top: 20px; border-top: 1px solid #111; }
-.menu-item { color: #444; font-size: 13px; font-weight: bold; }
-.menu-item.active { color: #f39c12; }
+.section-title { text-align: center; color: #f39c12; margin-top: 20px; }
+.stats-box { background: #111; padding: 20px; border-radius: 20px; text-align: center; margin: 20px 0; border: 1px solid #222; }
+.pro-btn { background: #f39c12; color: #000; border: none; padding: 18px; border-radius: 15px; font-weight: 900; font-size: 16px; cursor: pointer; width: 100%; }
+.input-group { margin-bottom: 20px; }
+.input-group label { display: block; margin-bottom: 8px; font-size: 12px; color: #888; }
+input { background: #111; border: 1px solid #333; color: #fff; padding: 15px; border-radius: 10px; width: 100%; box-sizing: border-box; }
+.bottom-menu { display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #111; }
+.nav-item { background: none; border: none; color: #444; font-weight: bold; font-size: 12px; cursor: pointer; }
+.nav-item.active { color: #f39c12; }
