@@ -1,23 +1,28 @@
 body { background: #000; color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; height: 100vh; overflow: hidden; }
 #app { display: flex; flex-direction: column; height: 100%; padding: 20px; box-sizing: border-box; }
 .top-nav { display: flex; justify-content: space-between; align-items: center; }
-.user-pill { background: #111; padding: 6px 15px; border-radius: 20px; border: 1px solid #333; color: #f39c12; font-size: 13px; }
+.user-pill { background: #111; padding: 5px 15px; border-radius: 20px; border: 1px solid #333; font-size: 12px; }
+
+/* TIER COLORS */
+.tier-bronze { color: #cd7f32; font-weight: 900; font-size: 12px; border: 1px solid #cd7f32; padding: 2px 10px; border-radius: 5px; }
+.tier-silver { color: #c0c0c0; font-weight: 900; font-size: 12px; border: 1px solid #c0c0c0; padding: 2px 10px; border-radius: 5px; }
+.tier-gold { color: #ffd700; font-weight: 900; font-size: 12px; border: 1px solid #ffd700; padding: 2px 10px; border-radius: 5px; }
+
 .content-section { display: none; flex-direction: column; flex-grow: 1; }
 .content-section.active { display: flex; }
-.main-display { text-align: center; margin: 30px 0; }
-.balance-row { display: flex; align-items: center; justify-content: center; gap: 10px; }
-.coin { width: 45px; filter: drop-shadow(0 0 10px #f39c12); }
+.main-display { text-align: center; margin: 25px 0; }
 #balance { font-size: 45px; color: #f39c12; margin: 0; font-weight: 900; }
-.mining-card { background: #0a0a0a; border-radius: 30px; padding: 25px; border: 1px solid #222; margin-top: auto; position: relative; }
-.medal-badge { font-size: 30px; position: absolute; top: -20px; left: 50%; transform: translateX(-50%); background: #000; padding: 5px; border-radius: 50%; border: 1px solid #f39c12; }
-.progress-bg { background: #1a1a1a; height: 10px; border-radius: 10px; overflow: hidden; margin: 15px 0; }
-.progress-fill { background: linear-gradient(90deg, #f39c12, #ffcc00); width: 0%; height: 100%; transition: 0.4s; }
-.section-title { text-align: center; color: #f39c12; margin-top: 20px; }
-.stats-box { background: #111; padding: 20px; border-radius: 20px; text-align: center; margin: 20px 0; border: 1px solid #222; }
-.pro-btn { background: #f39c12; color: #000; border: none; padding: 18px; border-radius: 15px; font-weight: 900; font-size: 16px; cursor: pointer; width: 100%; }
-.input-group { margin-bottom: 20px; }
-.input-group label { display: block; margin-bottom: 8px; font-size: 12px; color: #888; }
-input { background: #111; border: 1px solid #333; color: #fff; padding: 15px; border-radius: 10px; width: 100%; box-sizing: border-box; }
+.mining-card { background: #0a0a0a; border-radius: 25px; padding: 20px; border: 1px solid #222; margin-top: auto; }
+.progress-bg { background: #1a1a1a; height: 8px; border-radius: 10px; overflow: hidden; margin: 15px 0; }
+.progress-fill { background: #f39c12; height: 100%; width: 0%; transition: 0.3s; }
+.title { text-align: center; color: #f39c12; font-size: 18px; margin: 20px 0; }
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+.stat-card { background: #111; padding: 15px; border-radius: 15px; text-align: center; border: 1px solid #222; }
+.task-item { background: #111; padding: 15px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border: 1px solid #222; }
+.task-info b { font-size: 14px; }
+.task-info p { margin: 0; font-size: 11px; color: #f39c12; }
+.pro-button { background: #f39c12; color: #000; border: none; padding: 15px; border-radius: 12px; font-weight: 900; width: 100%; cursor: pointer; }
 .bottom-menu { display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #111; }
-.nav-item { background: none; border: none; color: #444; font-weight: bold; font-size: 12px; cursor: pointer; }
+.nav-item { background: none; border: none; color: #444; font-weight: bold; font-size: 11px; cursor: pointer; }
 .nav-item.active { color: #f39c12; }
+input { background: #111; border: 1px solid #333; color: #fff; padding: 15px; border-radius: 10px; width: 100%; box-sizing: border-box; margin-bottom: 20px; }
