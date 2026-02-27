@@ -1,3 +1,4 @@
+// 1. Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDjJkJ6fl96n5TBrO2sXFMQWSK1Sf6luSM",
   authDomain: "globalhash-e431a.firebaseapp.com",
@@ -8,22 +9,40 @@ const firebaseConfig = {
   databaseURL: "https://globalhash-e431a-default-rtdb.firebaseio.com/"
 };
 
+// 2. Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
-const AdController = window.Adsgram.init({ blockId: "23804" });
 
+// 3. Telegram WebApp Setup
 const tg = window.Telegram.WebApp;
+tg.ready();
 tg.expand();
-const userId = tg.initDataUnsafe.user?.id || "guest";
-document.getElementById('username').innerText = "@" + (tg.initDataUnsafe.user?.username || "Miner");
 
+// 4. Get User Info Immediately
+const user = tg.initDataUnsafe.user;
+const userId = user ? user.id : "guest_user";
+const userDisplayName = user ? (user.username || user.first_name || "Miner") : "Miner";
+
+// Update the username in UI right away to stop "Loading..."
+document.getElementById('username').innerText = "@" + userDisplayName;
+
+// 5. App State
 let userData = { balance: 0, adsSeen: 0, miningUntil: 0 };
 
+// 6. Adsgram Setup
+const AdController = window.Adsgram.init({ blockId: "23804" });
+
+// 7. Load Data from Firebase
 db.ref('users/' + userId).on('value', (snapshot) => {
-    if (snapshot.exists()) { userData = snapshot.val(); }
+    if (snapshot.exists()) {
+        userData = snapshot.val();
+    } else {
+        saveData();
+    }
     updateUI();
 });
 
+// 8. Show Ad Function
 async function showAd() {
     const now = Date.now();
     if (userData.miningUntil > now) return;
@@ -34,7 +53,7 @@ async function showAd() {
             userData.adsSeen++;
             saveData();
         } catch (e) {
-            tg.showAlert("Ad failed to load. Please try again later.");
+            tg.showAlert("Ad failed to load. Please try again.");
         }
     } else {
         startMining();
@@ -75,6 +94,7 @@ function updateTimer(ms) {
     document.getElementById('timer').innerText = h + ":" + (m < 10 ? '0'+m : m) + ":" + (sec < 10 ? '0'+sec : sec);
 }
 
+// Mining Logic (Increments balance every second)
 setInterval(() => {
     const now = Date.now();
     if (userData.miningUntil > now) {
@@ -83,7 +103,9 @@ setInterval(() => {
     }
 }, 1000);
 
-function saveData() { db.ref('users/' + userId).set(userData); }
+function saveData() {
+    db.ref('users/' + userId).set(userData);
+}
 
 function inviteFriends() {
     const inviteLink = "https://t.me/GlobalHash_bot/app?startapp=" + userId;
