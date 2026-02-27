@@ -3,21 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GlobalHash Professional</title>
+    <title>GlobalHash Pro</title>
     <!-- Telegram & Firebase SDKs -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="app">
         <div class="top-nav">
-            <div class="user-pill">
-                <span id="username">Loading...</span>
-            </div>
+            <div class="user-pill"><span id="username">Loading...</span></div>
             <div class="rank-badge">BRONZE MINER</div>
         </div>
 
@@ -30,6 +28,9 @@
         </div>
 
         <div class="mining-card">
+            <!-- የሜዳሊያ ምልክት -->
+            <div class="medal-icon">🏅</div>
+            
             <div class="card-header">
                 <span id="status-text">STATUS: IDLE</span>
                 <span id="timer" class="timer-text">24:00:00</span>
@@ -44,12 +45,12 @@
                 <b id="ad-count">0/20</b>
             </div>
 
-            <button id="action-btn" onclick="handleAction()">INITIALIZING...</button>
+            <button id="action-btn" onclick="handleAction()">LOADING...</button>
         </div>
 
         <div class="bottom-menu">
             <div class="menu-item active">⛏ Mine</div>
-            <div class="menu-item">👥 Team</div>
+            <div class="menu-item" onclick="inviteFriends()">👥 Team</div>
             <div class="menu-item">💼 Wallet</div>
         </div>
     </div>
