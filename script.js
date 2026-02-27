@@ -1,4 +1,3 @@
-// Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDjJkJ6fl96n5TBrO2sXFMQWSK1Sf6luSM",
   authDomain: "globalhash-e431a.firebaseapp.com",
@@ -6,37 +5,23 @@ const firebaseConfig = {
   storageBucket: "globalhash-e431a.firebasestorage.app",
   messagingSenderId: "453689359269",
   appId: "1:453689359269:web:f61f441e383cb30b28464c",
-  databaseURL: "https://globalhash-e431a-default-rtdb.firebaseio.com/" // ይህ ተጨምሯል
+  databaseURL: "https://globalhash-e431a-default-rtdb.firebaseio.com/"
 };
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
+const AdController = window.Adsgram.init({ blockId: "23804" });
 
-// Telegram Integration
 const tg = window.Telegram.WebApp;
 tg.expand();
-const userId = tg.initDataUnsafe.user?.id || "guest_user";
-const username = tg.initDataUnsafe.user?.username || "Miner";
-
-// ስሙን ወዲያውኑ እንዲቀይር
-document.getElementById('username').innerText = "@" + username;
+const userId = tg.initDataUnsafe.user?.id || "guest";
+document.getElementById('username').innerText = "@" + (tg.initDataUnsafe.user?.username || "Miner");
 
 let userData = { balance: 0, adsSeen: 0, miningUntil: 0 };
 
-// አድስግራም መቆጣጠሪያ
-const AdController = window.Adsgram.init({ blockId: "23804" });
-
-// መረጃን ከዳታቤዝ መጫን
 db.ref('users/' + userId).on('value', (snapshot) => {
-    if (snapshot.exists()) {
-        userData = snapshot.val();
-    } else {
-        saveData();
-    }
+    if (snapshot.exists()) { userData = snapshot.val(); }
     updateUI();
-}, (error) => {
-    console.log("Firebase Error: " + error);
 });
 
 async function showAd() {
@@ -49,7 +34,7 @@ async function showAd() {
             userData.adsSeen++;
             saveData();
         } catch (e) {
-            tg.showAlert("ማስታወቂያው አልተጫነም፤ እባክዎ በድጋሚ ይሞክሩ።");
+            tg.showAlert("Ad failed to load. Please try again later.");
         }
     } else {
         startMining();
@@ -98,9 +83,7 @@ setInterval(() => {
     }
 }, 1000);
 
-function saveData() {
-    db.ref('users/' + userId).set(userData);
-}
+function saveData() { db.ref('users/' + userId).set(userData); }
 
 function inviteFriends() {
     const inviteLink = "https://t.me/GlobalHash_bot/app?startapp=" + userId;
