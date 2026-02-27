@@ -1,42 +1,51 @@
-// Firebase Config
+// Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDjJkJ6fl96n5TBrO2sXFMQWSK1Sf6luSM",
   authDomain: "globalhash-e431a.firebaseapp.com",
   projectId: "globalhash-e431a",
   storageBucket: "globalhash-e431a.firebasestorage.app",
   messagingSenderId: "453689359269",
-  appId: "1:453689359269:web:f61f441e383cb30b28464c"
+  appId: "1:453689359269:web:f61f441e383cb30b28464c",
+  databaseURL: "https://globalhash-e431a-default-rtdb.firebaseio.com/" // ይህ ተጨምሯል
 };
 
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// Adsgram መታወቂያ ተቀናብሯል
-const AdController = window.Adsgram.init({ blockId: "23804" });
-
+// Telegram Integration
 const tg = window.Telegram.WebApp;
 tg.expand();
-const userId = tg.initDataUnsafe.user?.id || "guest";
-document.getElementById('username').innerText = `@${tg.initDataUnsafe.user?.username || 'Miner'}`;
+const userId = tg.initDataUnsafe.user?.id || "guest_user";
+const username = tg.initDataUnsafe.user?.username || "Miner";
+
+// ስሙን ወዲያውኑ እንዲቀይር
+document.getElementById('username').innerText = "@" + username;
 
 let userData = { balance: 0, adsSeen: 0, miningUntil: 0 };
 
-// ዳታውን ከዳታቤዝ መጫን
+// አድስግራም መቆጣጠሪያ
+const AdController = window.Adsgram.init({ blockId: "23804" });
+
+// መረጃን ከዳታቤዝ መጫን
 db.ref('users/' + userId).on('value', (snapshot) => {
     if (snapshot.exists()) {
         userData = snapshot.val();
+    } else {
+        saveData();
     }
     updateUI();
+}, (error) => {
+    console.log("Firebase Error: " + error);
 });
 
-// እውነተኛ ማስታወቂያ የሚያሳየው ፈንክሽን
 async function showAd() {
     const now = Date.now();
     if (userData.miningUntil > now) return;
 
     if (userData.adsSeen < 20) {
         try {
-            await AdController.show(); // ማስታወቂያውን ያሳያል
+            await AdController.show();
             userData.adsSeen++;
             saveData();
         } catch (e) {
@@ -63,8 +72,7 @@ function updateUI() {
         document.getElementById('action-btn').innerText = "MINING IN PROGRESS";
         document.getElementById('action-btn').style.opacity = "0.5";
         document.getElementById('progress-bar').style.width = "100%";
-        const remaining = userData.miningUntil - now;
-        updateTimer(remaining);
+        updateTimer(userData.miningUntil - now);
     } else {
         document.getElementById('status-text').innerText = "STATUS: IDLE";
         document.getElementById('timer').innerText = "24:00:00";
@@ -79,21 +87,22 @@ function updateTimer(ms) {
     let h = Math.floor(s / 3600);
     let m = Math.floor((s % 3600) / 60);
     let sec = s % 60;
-    document.getElementById('timer').innerText = `${h}:${m < 10 ? '0'+m : m}:${sec < 10 ? '0'+sec : sec}`;
+    document.getElementById('timer').innerText = h + ":" + (m < 10 ? '0'+m : m) + ":" + (sec < 10 ? '0'+sec : sec);
 }
 
-// ማይንግ በየሰከንዱ ባላንስ እንዲጨምር
 setInterval(() => {
     const now = Date.now();
     if (userData.miningUntil > now) {
-        userData.balance += 0.0001; 
+        userData.balance += 0.0001;
         saveData();
     }
 }, 1000);
 
-function saveData() { db.ref('users/' + userId).set(userData); }
+function saveData() {
+    db.ref('users/' + userId).set(userData);
+}
 
 function inviteFriends() {
-    const inviteLink = `https://t.me/GlobalHash_bot/app?startapp=${userId}`;
-    tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=Join GlobalHash!`);
+    const inviteLink = "https://t.me/GlobalHash_bot/app?startapp=" + userId;
+    tg.openTelegramLink("https://t.me/share/url?url=" + encodeURIComponent(inviteLink) + "&text=Join GlobalHash!");
 }
