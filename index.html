@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GlobalHash Platform</title>
+    <title>GlobalHash Elite</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
@@ -13,64 +13,74 @@
 </head>
 <body>
     <div id="app">
-        <!-- TOP NAVIGATION -->
         <div class="top-nav">
-            <div class="user-pill"><span id="username">Loading...</span></div>
-            <div class="rank-badge">BRONZE MINER</div>
+            <div class="user-pill"><span id="username">@User</span></div>
+            <div id="tier-badge" class="tier-bronze">BRONZE</div>
         </div>
 
-        <!-- MAIN CONTENT SECTIONS -->
+        <!-- MINE TAB -->
         <div id="mine-section" class="content-section active">
             <div class="main-display">
-                <p class="label">GLOBAL HASH BALANCE</p>
+                <p class="label">GH BALANCE</p>
                 <div class="balance-row">
                     <img src="https://cdn-icons-png.flaticon.com/512/6001/6001527.png" class="coin">
                     <h1 id="balance">0.0000</h1>
                 </div>
             </div>
-
             <div class="mining-card">
-                <div class="medal-badge">🏅</div>
                 <div class="card-header">
-                    <span id="status-text">STATUS: IDLE</span>
+                    <span id="status-text">IDLE</span>
                     <span id="timer" class="timer">24:00:00</span>
                 </div>
                 <div class="progress-bg"><div id="progress-bar" class="progress-fill"></div></div>
                 <div class="ad-info">Daily Ads: <span id="ad-count">0/20</span></div>
-                <button id="action-btn" onclick="showAd()">WATCH AD TO START</button>
+                <button id="action-btn" class="main-action" onclick="showAd()">WATCH AD TO START</button>
             </div>
         </div>
 
+        <!-- TEAM TAB -->
         <div id="team-section" class="content-section">
-            <h2 class="section-title">REFERRAL PROGRAM</h2>
-            <div class="stats-box">
-                <p>Total Invited</p>
-                <h3 id="friends-count">0</h3>
+            <h2 class="title">YOUR TEAM</h2>
+            <div class="stats-grid">
+                <div class="stat-card"><p>Friends</p><h3 id="friends-count">0</h3></div>
+                <div class="stat-card"><p>Ref. Bonus</p><h3>+10%</h3></div>
             </div>
-            <p class="info-text">Invite friends and get 10% of their mining speed!</p>
-            <button class="pro-btn" onclick="inviteFriends()">INVITE FRIENDS</button>
+            <div class="ref-box">
+                <p>Earn 10% GH from every friend's mining!</p>
+                <button class="pro-button" onclick="inviteFriends()">INVITE FRIENDS</button>
+            </div>
         </div>
 
+        <!-- TASKS TAB -->
+        <div id="tasks-section" class="content-section">
+            <h2 class="title">EARN EXTRA</h2>
+            <div class="task-item">
+                <div class="task-info"><b>Join Channel</b><p>+10 GH Tokens</p></div>
+                <button onclick="window.open('https://t.me/GlobalHash_Channel')">JOIN</button>
+            </div>
+            <div class="task-item">
+                <div class="task-info"><b>Follow Twitter</b><p>+5 GH Tokens</p></div>
+                <button onclick="window.open('https://twitter.com/GlobalHash')">FOLLOW</button>
+            </div>
+        </div>
+
+        <!-- WALLET TAB -->
         <div id="wallet-section" class="content-section">
-            <h2 class="section-title">WALLET</h2>
-            <div class="stats-box">
-                <p>Withdrawable Balance</p>
-                <h3 id="wallet-balance">0.0000 GH</h3>
+            <h2 class="title">WITHDRAW</h2>
+            <div class="wallet-card">
+                <p>Total Assets</p>
+                <h2 id="wallet-balance">0.0000 GH</h2>
             </div>
-            <div class="input-group">
-                <label>TON/BEP20 Address</label>
-                <input type="text" id="wallet-address" placeholder="Enter your address">
-            </div>
-            <button class="pro-btn" onclick="requestWithdraw()">WITHDRAW NOW</button>
-            <p class="min-withdraw">Minimum withdrawal: 100 GH</p>
+            <input type="text" id="wallet-address" placeholder="TON or BEP20 Address">
+            <button class="pro-button" onclick="requestWithdraw()">WITHDRAW</button>
         </div>
 
-        <!-- BOTTOM NAVIGATION -->
-        <div class="bottom-menu">
+        <nav class="bottom-menu">
             <button class="nav-item active" onclick="showTab('mine')">⛏ Mine</button>
             <button class="nav-item" onclick="showTab('team')">👥 Team</button>
+            <button class="nav-item" onclick="showTab('tasks')">🎁 Tasks</button>
             <button class="nav-item" onclick="showTab('wallet')">💼 Wallet</button>
-        </div>
+        </nav>
     </div>
     <script src="script.js"></script>
 </body>
