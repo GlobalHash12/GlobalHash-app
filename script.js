@@ -1,4 +1,8 @@
-// 1. Firebase Config
+const tg = window.Telegram.WebApp;
+tg.ready();
+tg.expand();
+
+// Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyDjJkJ6fl96n5TBrO2sXFMQWSK1Sf6luSM",
   authDomain: "globalhash-e431a.firebaseapp.com",
@@ -8,22 +12,12 @@ const firebaseConfig = {
   appId: "1:453689359269:web:f61f441e383cb30b28464c",
   databaseURL: "https://globalhash-e431a-default-rtdb.firebaseio.com/"
 };
-
-// Initialize Firebase
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
+firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// Telegram Setup
-const tg = window.Telegram.WebApp;
-tg.ready();
-tg.expand();
-
-// Adsgram
 const AdController = window.Adsgram.init({ blockId: "23804", debug: true });
 
-// Page Switcher
+// 1. PAGE NAVIGATION
 window.showPage = function(id) {
     const pages = document.querySelectorAll('.page');
     pages.forEach(p => p.classList.remove('active'));
@@ -31,21 +25,26 @@ window.showPage = function(id) {
     window.scrollTo(0,0);
 };
 
-// Language Selection
+// 2. LANGUAGE SELECTION
 window.selectLang = function(id, name) {
     document.getElementById('selected-lang-title').innerText = name + " Novels";
-    loadLibrary();
+    loadLibrary(id);
     showPage('library-section');
 };
 
-// Load Books
-function loadLibrary() {
+// 3. LOAD LIBRARY (8 BOOKS)
+function loadLibrary(langId) {
     const list = document.getElementById('book-list');
     list.innerHTML = '';
     const myBooks = [
         { title: "Dr. Dorm", cover: "cover1.jpg" },
         { title: "Hidden Stitch", cover: "cover2.jpg" },
-        { title: "Prince of Asphalt", cover: "cover3.jpg" }
+        { title: "Prince of Asphalt", cover: "cover3.jpg" },
+        { title: "Dark Magic", cover: "cover4.jpg" },
+        { title: "Dark Love", cover: "cover5.jpg" },
+        { title: "Isekai Tale", cover: "cover6.jpg" },
+        { title: "Fantasy World", cover: "cover7.jpg" },
+        { title: "Forbidden Power", cover: "cover8.jpg" }
     ];
     myBooks.forEach(book => {
         const card = document.createElement('div');
@@ -60,7 +59,7 @@ function openBook(book) {
     document.getElementById('reading-title').innerText = book.title;
     const list = document.getElementById('chapter-list');
     list.innerHTML = '';
-    for(let i=1; i<=10; i++) {
+    for(let i=1; i<=25; i++) {
         const btn = document.createElement('div');
         btn.className = 'chapter-btn';
         btn.innerHTML = `<span>Chapter ${i}</span> 🔒`;
@@ -77,7 +76,6 @@ window.openChapter = async function(num) {
         await AdController.show();
         displayContent(num);
     } catch (e) {
-        tg.showAlert("Loading chapter...");
         displayContent(num);
     }
 };
@@ -86,5 +84,5 @@ function displayContent(num) {
     document.getElementById('chapter-list').classList.add('hidden');
     const display = document.getElementById('content-display');
     display.classList.remove('hidden');
-    display.innerText = `Chapter ${num}\n\nThis story content will be loaded from Firebase for your 14 languages.`;
+    display.innerText = `Chapter ${num} Content will be loaded here from Firebase.`;
 }
