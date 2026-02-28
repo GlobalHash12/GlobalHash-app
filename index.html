@@ -11,7 +11,7 @@
 </head>
 <body>
     <div id="app">
-        <!-- HEADER (ልክ እንደ ምስልህ) -->
+        <!-- HEADER -->
         <header class="main-nav">
             <div class="logo">GLOBAL<span>NOVEL</span></div>
             <div class="header-icons">
@@ -22,34 +22,34 @@
             </div>
         </header>
 
-        <!-- ቋንቋዎቹ እዚህ ጋር በቀጥታ ተቀምጠዋል -->
+        <!-- 1. LANGUAGE PAGE -->
         <div id="language-section" class="page active">
             <div class="lang-container">
                 <div class="lang-item" onclick="selectLang('am', 'Amharic')"><img src="https://flagcdn.com/w320/et.png"><p>Amharic Novels (የአማርኛ ልብወለዶች)</p></div>
                 <div class="lang-item" onclick="selectLang('en', 'English')"><img src="https://flagcdn.com/w320/gb.png"><p>English Novels</p></div>
+                <div class="lang-item" onclick="selectLang('id', 'Indonesian')"><img src="https://flagcdn.com/w320/id.png"><p>Indonesian (Bahasa Indonesia)</p></div>
+                <div class="lang-item" onclick="selectLang('ko', 'Korean')"><img src="https://flagcdn.com/w320/kr.png"><p>Korean Novels (한국 소설)</p></div>
+                <div class="lang-item" onclick="selectLang('ja', 'Japanese')"><img src="https://flagcdn.com/w320/jp.png"><p>Japanese Novels (日本の小説)</p></div>
+                <div class="lang-item" onclick="selectLang('ar', 'Arabic')"><img src="https://flagcdn.com/w320/sa.png"><p>Arabic Novels (روايات عربية)</p></div>
                 <div class="lang-item" onclick="selectLang('hi', 'Hindi')"><img src="https://flagcdn.com/w320/in.png"><p>Hindi Novels (हिंदी उपन्यास)</p></div>
                 <div class="lang-item" onclick="selectLang('zh', 'Chinese')"><img src="https://flagcdn.com/w320/cn.png"><p>Chinese Novels (中文小说)</p></div>
                 <div class="lang-item" onclick="selectLang('fr', 'French')"><img src="https://flagcdn.com/w320/fr.png"><p>French Novels (Romans français)</p></div>
                 <div class="lang-item" onclick="selectLang('it', 'Italian')"><img src="https://flagcdn.com/w320/it.png"><p>Italian Novels (Romanzi italiani)</p></div>
                 <div class="lang-item" onclick="selectLang('es', 'Spanish')"><img src="https://flagcdn.com/w320/es.png"><p>Spanish Novels (Novelas en español)</p></div>
                 <div class="lang-item" onclick="selectLang('de', 'German')"><img src="https://flagcdn.com/w320/de.png"><p>German Novels (Deutsche Romane)</p></div>
-                <div class="lang-item" onclick="selectLang('id', 'Indonesian')"><img src="https://flagcdn.com/w320/id.png"><p>Indonesian Novels (Novel Bahasa Indonesia)</p></div>
-                <div class="lang-item" onclick="selectLang('ko', 'Korean')"><img src="https://flagcdn.com/w320/kr.png"><p>Korean Novels (한국 소설)</p></div>
-                <div class="lang-item" onclick="selectLang('ja', 'Japanese')"><img src="https://flagcdn.com/w320/jp.png"><p>Japanese Novels (日本の小説)</p></div>
-                <div class="lang-item" onclick="selectLang('ar', 'Arabic')"><img src="https://flagcdn.com/w320/sa.png"><p>Arabic Novels (روايات عربية)</p></div>
-                <div class="lang-item" onclick="selectLang('pt', 'Portuguese')"><img src="https://flagcdn.com/w320/pt.png"><p>Portuguese Novels (Romances em português)</p></div>
+                <div class="lang-item" onclick="selectLang('pt', 'Portuguese')"><img src="https://flagcdn.com/w320/pt.png"><p>Portuguese Novels (Português)</p></div>
                 <div class="lang-item" onclick="selectLang('ru', 'Russian')"><img src="https://flagcdn.com/w320/ru.png"><p>Russian Novels (Русские романы)</p></div>
             </div>
         </div>
 
-        <!-- LIBRARY PAGE -->
+        <!-- 2. LIBRARY PAGE -->
         <div id="library-section" class="page">
-            <button class="back-link" onclick="showPage('language-section')">← Back to Languages</button>
+            <button class="back-link" onclick="showPage('language-section')">← Change Language</button>
             <h2 id="selected-lang-title">Novels</h2>
             <div class="book-grid" id="book-list"></div>
         </div>
 
-        <!-- READER PAGE -->
+        <!-- 3. READER PAGE -->
         <div id="reader-section" class="page">
             <button class="back-link" onclick="showPage('library-section')">← Back to Books</button>
             <h2 id="reading-title">Book Title</h2>
